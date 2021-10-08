@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:regular,500,600,700,800&display=swap");
+
+* {
+  margin: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  border: none;
+}
+html {
+  height: 100%;
+  font-size: 10px;
+}
+body {
+  height: 100%;
+  font: 500 1.4rem/143% "Montserrat", sans-serif;
+  line-height: 1;
+  color: #737373;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+img {
+  vertical-align: top;
+}
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+.wrapper {
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+/* * overflow не на body т.к. иначе не будет скрола вовсе */
+
+._container {
+  max-width: 104.6rem;
+  padding: 0 1.5rem;
+  margin: 0 auto;
+  box-sizing: content-box;
+}
+/* *это технический контейнер, для ограничения контента по ширине,
+*он будет периодически вставляться в html вокруг опред. блоков */
+
+/* HEADER ------------------------------------------------------------ */
+.header {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+/* *абсолют, тк шапка нависает над блоком с картинкой, поверх него, сразу побольше z-index */
+
+.header__container {
+  display: flex;
+  min-height: 10.4rem;
+  align-items: center;
+}
+@media (max-width: 425px) {
+  .header__container {
+    min-height: 7rem;
+  }
+}
+.header__logo {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #252b42;
+}
+.header__menu {
+  margin: 0 0 0 13.3rem;
+}
+@media (max-width: 992px) {
+  .header__menu {
+    margin: 0 0 0 8rem;
+  }
+}
+@media (max-width: 767px) {
+  .header__menu {
+    margin: 0 0 0 4rem;
+  }
+}
+@media (max-width: 425px) {
+  .header__menu {
+    margin: 0 0 0 2rem;
+  }
+}
+
+.menu {
+  padding: 0.5rem 0;
+}
+/* *padding 5px это отступ безопасности, чтобы при адаптиве/изенениях контент не прилипал к верху экрана */
+.menu__list {
+  display: flex;
+  flex-wrap: wrap;
+}
+/* *wrap чтобы если заказчик добавит еще пунктов меню, чтобы они переносились и верстка не сломалась (для надежности) */
+.menu__item:not(:last-child) {
+  margin: 0 2.1rem 0 0;
+}
+.menu__link {
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: calc(24 / 14 * 100%);
+}
+/* *line-height лучще в %, чтобы при изменении шрифта, он автоматически менялся */
+@media (max-width: 425px) {
+  .menu__link {
+    font-size: 1.8rem;
+  }
+}
+
+/* MAIN ------------------------------------------------------------- */
+.page {
+  flex: 1 1 auto;
+}
+.page__main-block {
+}
+.main-block {
+}
+.main-block__container {
+}
+._container {
+}
+.main-block__body {
+}
+.main-block__title {
+}
+.main-block__text {
+}
+.main-block__buttons {
+}
+.main-block__button {
+}
+.main-block__button_border {
+}
+
+/* FOOTER------------------------------------------------------------ */
+.footer {
+}
+/* *чтобы прибить футер к низу стр на враппер можно задать флекс, колумн, а на мэйн flex: 1 1 auto; - позволяя ему увеличиваться */
