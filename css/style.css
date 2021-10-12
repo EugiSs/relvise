@@ -14,7 +14,9 @@ body {
   height: 100%;
   font: 500 1.4rem/143% "Montserrat", sans-serif;
   line-height: 1;
+  letter-spacing: 0.2px;
   color: #737373;
+  background: #fafafa;
 }
 a {
   text-decoration: none;
@@ -36,7 +38,6 @@ li {
   flex-direction: column;
 }
 /* * overflow не на body т.к. иначе не будет скрола вовсе */
-
 ._container {
   max-width: 104.6rem;
   padding: 0 1.5rem;
@@ -45,7 +46,41 @@ li {
 }
 /* *это технический контейнер, для ограничения контента по ширине,
 *он будет периодически вставляться в html вокруг опред. блоков */
-
+._ibg {
+  position: relative;
+}
+._ibg img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.header-block {
+  text-align: center;
+}
+.header-block__title {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #252b42;
+}
+.header-block__title:not(:last-child) {
+  margin: 0 0 1rem 0;
+}
+@media (max-width: 992px) {
+  .header-block__title {
+    font-size: 3.5rem;
+  }
+}
+@media (max-width: 767px) {
+  .header-block__title {
+    font-size: 3rem;
+  }
+}
+/* * через not потому что саб тайтла может и не быть */
+.header-block__sub-title {
+}
 /* HEADER ------------------------------------------------------------ */
 .header {
   position: absolute;
@@ -89,7 +124,6 @@ li {
     margin: 0 0 0 2rem;
   }
 }
-
 .menu {
   padding: 0.5rem 0;
 }
@@ -118,28 +152,343 @@ li {
 .page {
   flex: 1 1 auto;
 }
+/* page__main-block ------------------------------------------------- */
 .page__main-block {
 }
 .main-block {
+  position: relative;
 }
 .main-block__container {
 }
-._container {
-}
 .main-block__body {
+  padding: 18.4rem 0 19.1rem 0;
+  position: relative;
+  z-index: 2;
+  max-width: 40rem;
 }
+@media (max-width: 992px) {
+  .main-block__body {
+    padding: 12rem 0 19.1rem 0;
+  }
+}
+@media (max-width: 992px) {
+  .main-block__body {
+    padding: 10rem 0 16rem 0;
+  }
+}
+/* *1) 184 тк 104 - высота шапки, 80 отступ от нее до верха блока (h1) 
+ * 191 тк отступ от низа блока main-block__body (кнопки) до общего блока (низа картинки)*/
+/* *2) relative b z-index нужны, чтобы картинка не закрывала текст в блоке*/
+/* *3) max-width сначала по макету сделали 509px, но текст переносиля позднее, чем надо, поэтому подогнали ширину по тексту и поменяли */
+.main-block__body > *:not(:last-child) {
+  margin: 0 0 3.5rem 0;
+}
+/* *1) обращение через > * подразумевает обращение ко всем обьектам первого уровня в этом блоке */
+/* *2) такое удобно делать для отстутов, чтобы при изменении контента верстка не ломалась, т.е. у последнего (любого) ребенка отступа всегда не будет */
 .main-block__title {
+  font-size: 5.8rem;
+  font-weight: 800;
+  line-height: 138%;
+  color: #252b42;
+}
+@media (max-width: 992px) {
+  .main-block__title {
+    font-size: 4.2rem;
+  }
 }
 .main-block__text {
+  font-size: 2rem;
+  line-height: 150%;
 }
 .main-block__buttons {
+  display: inline-flex;
+  flex-wrap: wrap;
 }
+/* * wrap для того, чтобы они переносились при адаптиве на меньшихх экранах */
 .main-block__button {
+  font-weight: 700;
+  color: #fff;
+  background: #ff7b47;
+  border-radius: 3.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 3.6rem;
+  min-height: 4.8rem;
+  line-height: 200%;
 }
 .main-block__button_border {
+  background: transparent;
+  border: 1px solid #0d5c63;
+  color: #0d5c63;
+}
+.main-block__button:not(:last-child) {
+  margin: 0 1rem 0 0;
+}
+@media (max-width: 479px) {
+  .main-block__button {
+    flex-grow: 1;
+  }
+  /* *чтобы они растягивались на всю ширину на мал экранах */
+  .main-block__button:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+}
+.main-block__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 1420px) {
+  .main-block__image img {
+    object-position: right;
+  }
+}
+/* *чтобы люди при изменении разрешения были видны */
+@media (max-width: 992px) {
+  .main-block__image img {
+    opacity: 0.5;
+  }
+}
+/* *при изменении расширения текст наезжает на картинку и становится менее читабельным. чтобы это избежать - выбеливаем картинку перед тем расширением, когда она накроет текст */
+
+/* page__services --------------------------------------------------- */
+.page__services {
+  margin: -11.1rem 0 0 0;
+  position: relative;
+  z-index: 2;
+}
+/* *1) поднимаем этот блок выше, на header. Через отриц марджин, а не через позиционирование - для того, чтобы эл-т остался в потоке и блоки ниже него тоже подтянулись за ним (иначе под блоком была бы дыра) */
+/* *2) position и z-index для того, чтобы блок был над шапкой*/
+.services {
+}
+.services__container {
+}
+.services__body {
+}
+@media (min-width: 670px) {
+  .services__body {
+    display: flex;
+    margin: 0 -1.5rem;
+    flex-wrap: wrap;
+  }
+}
+/* *1) рааздвинул флекс контейнер по 15px влево и вправо, а колонку (ниже), сдвинул паддингами. Т.о. по бокам контецнера все будет в линию, а между колонками будет соответствующее макету расстояние (30px) */
+/* *2) сделали через медиа для адаптива, чтобы до 670 они были в колонку, без флекса */
+.services_column {
+  flex: 0 1 33.333%;
+}
+@media (min-width: 670px) {
+  .services_column {
+    padding: 0 1.5rem;
+  }
+}
+@media (max-width: 992px) {
+  .services_column {
+    flex: 0 1 50%;
+    margin: 0 0 3rem 0;
+  }
+  .services_column:last-child {
+    flex: 0 1 100%;
+  }
+}
+/* *для адаптива, чтобы колонки не сильно сужались, и выстраивались по 2 в ряд (50% ширины занимали) */
+.services__item {
+  height: 100%;
+  box-shadow: 0px 13px 19px rgba(0, 0, 0, 0.07);
+  background-color: #fff;
+  padding: 3.5rem 4rem;
+}
+/* *height:100% чтобы у карточек была одинаковая высота. Если в какой-то карточке увеличится контент, они все растянутся на одну высоту */
+.item-service {
+}
+.item-service > *:not(:last-child) {
+  padding-bottom: 1rem;
+}
+.item-service_green {
+  background: #0d5c63;
+}
+.item-service_green .item-service__title {
+  color: #fff;
+}
+.item-service_green .item-service__text {
+  color: #fff;
+}
+.item-service__icon {
+}
+.item-service__title {
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 133%;
+  letter-spacing: 0.1px;
+}
+.item-service__text {
+  font-size: 1.4rem;
+  line-height: 143%;
 }
 
+/* page__advantages ------------------------------------------- */
+
+.page__advantages {
+}
+.advantages {
+  padding: 8rem 0;
+}
+@media (max-width: 992px) {
+  .advantages {
+    padding: 5rem 0;
+  }
+}
+@media (max-width: 767px) {
+  .advantages {
+    padding: 4rem 0;
+  }
+}
+.advantages__container {
+}
+.advantages__header {
+  margin: 0 0 5rem 0;
+}
+@media (max-width: 767px) {
+  .advantages__header {
+    margin: 0 0 2.5rem 0;
+  }
+}
+.advantages__body {
+  display: flex;
+  margin: 0 -1.5rem -3rem;
+  flex-wrap: wrap;
+}
+/* * wrap для адаптива */
+.advantages__column {
+  padding: 0 1.5rem;
+  flex: 0 1 25%;
+  margin: 0 0 3rem 0;
+}
+@media (max-width: 1040px) {
+  .advantages__column {
+    flex: 0 1 50%;
+  }
+}
+@media (max-width: 560px) {
+  .advantages__column {
+    flex: 0 1 100%;
+  }
+}
+.advantages__item {
+  background: #ffffff;
+  padding: 3rem;
+  text-align: center;
+  font-weight: 700;
+}
+.advantages__item > *:not(:last-child) {
+  margin: 0 0 1rem 0;
+}
+.advantages__icon {
+  height: 4.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* * иконки разного размера, поэтому сначала ищем самую высокую, задаем ее высоту всем иконкам блока. далее задаем им флекс и выравнивание (чтобы все были прибиты к одной линии можно задать флекс-старт или флекс-энд */
+.advantages__value {
+  font-size: 4rem;
+  line-height: 142%;
+  color: #252b42;
+}
+.advantages__text {
+  font-size: 1.6rem;
+  line-height: 150%;
+  letter-spacing: 0.1;
+}
+
+/* page__practice ------------------------------------------------------------------ */
+.page__practice {
+}
+.practice {
+  padding: 12.5rem 0 8rem 0;
+}
+@media (max-width: 993px) {
+  .practice {
+    padding: 4rem 0 8rem 0;
+  }
+}
+@media (max-width: 767px) {
+  .practice {
+    padding: 0 0 4rem 0;
+  }
+}
+.practice__container {
+}
+.practice__header {
+  margin: 0 0 4.5rem 0;
+}
+@media (max-width: 767px) {
+  .practice__header {
+    margin: 0 0 2.5rem 0;
+  }
+}
+.practice__body {
+  margin: 0 -2rem -3rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+.practice__column {
+  padding: 0 2rem;
+  margin: 0 0 3rem 0;
+  flex: 0 1 25%;
+}
+@media (max-width: 1040px) {
+  .practice__column {
+    flex: 0 1 50%;
+  }
+}
+@media (max-width: 630px) {
+  .practice__column {
+    flex: 0 1 100%;
+  }
+}
+.practice__item {
+}
+.item-practice {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.item-practice__content {
+  padding: 3rem;
+  flex: 1 1 auto;
+}
+/* *чтобы выровнять колонки карточек: задаем флекс на item-practice и высоту 100%, и на колонки flex: 1 1 auto; это позволяет контенту увеличиваться, т.о. он будет придавливать картинку и она будет внизу*/
+.item-practice__link {
+  display: inline-block;
+}
+.item-practice__link:hover {
+  text-decoration: underline;
+}
+.item-practice__link > *:not(:last-child) {
+  margin: 0 0 1.5rem 0;
+}
+.item-practice__title {
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 150%;
+  letter-spacing: 0.1;
+  color: #252b42;
+}
+.item-practice__text {
+}
+.item-practice__img {
+  display: block;
+  padding: 0 0 60% 0;
+}
+/* *1) картинка 230на138, делим 138 на 230 и умнож на 100% - получаем размер отступа (нижнего паддинга) в процентах (чтобы разметить там картинку) */
+/* *2) можно также было высчитать высоту картинки в процентах от высоты всей карточки и указать через flex: 0 1 40% */
 /* FOOTER------------------------------------------------------------ */
 .footer {
 }
+
 /* *чтобы прибить футер к низу стр на враппер можно задать флекс, колумн, а на мэйн flex: 1 1 auto; - позволяя ему увеличиваться */
