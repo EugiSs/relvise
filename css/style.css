@@ -12,8 +12,8 @@ html {
 }
 body {
   height: 100%;
-  font: 500 1.4rem/143% "Montserrat", sans-serif;
-  line-height: 1;
+  font: 500 1.4rem "Montserrat", sans-serif;
+  line-height: 1.43;
   letter-spacing: 0.2px;
   color: #737373;
   background: #fafafa;
@@ -401,7 +401,7 @@ li {
 .advantages__text {
   font-size: 1.6rem;
   line-height: 150%;
-  letter-spacing: 0.1;
+  letter-spacing: 0.1px;
 }
 
 /* page__practice ------------------------------------------------------------------ */
@@ -476,7 +476,7 @@ li {
   font-weight: 700;
   font-size: 1.6rem;
   line-height: 150%;
-  letter-spacing: 0.1;
+  letter-spacing: 0.1px;
   color: #252b42;
 }
 .item-practice__text {
@@ -487,8 +487,146 @@ li {
 }
 /* *1) картинка 230на138, делим 138 на 230 и умнож на 100% - получаем размер отступа (нижнего паддинга) в процентах (чтобы разметить там картинку) */
 /* *2) можно также было высчитать высоту картинки в процентах от высоты всей карточки и указать через flex: 0 1 40% */
+
+/* page__whoweare ----------------------------------------------- */
+.page__whoweare {
+}
+.whoweare {
+  padding: 10rem 0 13rem 0;
+  background: #ffffff;
+}
+.whoweare__container {
+}
+.whoweare__header {
+  margin: 0 0 10rem 0;
+}
+.whoweare__body {
+  display: flex;
+  align-items: flex-start;
+}
+/* * align-items: flex-start; для правильного позиционирования контента при адаптиве */
+.whoweare__video {
+  flex: 0 0 57%;
+  position: relative;
+  padding: 0 0 42.25% 0;
+}
+/* *1) 600px (ширина блока видео по макету) делим на 1046px (ширина ограничивающего контейнера, в котором весь контент) * 100% = получаем процент ширины, который занимает блок с видео. Записываем его в flex: 0 0 57% */
+/* *2) блоку с контентом (.whoweare__content) задаем ширину (flex-basis) = 1 1 auto. Это также удобно, если видео на стр не будет - блок с тексом растянется на всю ширину*/
+.whoweare__video iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+/* *задаем видео (вставлено через iframe) размеры за счет позиционирования внутри блока .whoweare__video*/
+/* *2) но т.о. высота контенера с видео будет зависеть от высоты блока с контентом (т.е. если контента будет мало, видео будет меньше, чем надо) это не правильно, поэтому зададим паддинг:*/
+/* *3) высота видео по макету 442, делим 442 на 1046 и умножаем на 100% - записываем в нижний паддинг (у блока .whoweare__video) этот отступ */
+.whoweare__content {
+  padding: 2rem 0 0 12.1rem;
+  flex: 1 1 auto;
+  text-align: left;
+}
+.whoweare__top:not(:last-child) {
+  margin: 0 0 5rem 0;
+}
+.whoweare__title {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 142%;
+  color: #252b42;
+}
+.whoweare__title:not(:last-child) {
+  margin: 0 0 1rem 0;
+}
+.whoweare__text {
+}
+.whoweare__items {
+}
+.whoweare__item {
+}
+.whoweare__item:not(:last-child) {
+  margin: 0 0 3rem 0;
+}
+.item-whoweare {
+  display: flex;
+}
+.item-whoweare__icon {
+  flex: 0 0 32px;
+  margin: 0 2rem 0 0;
+}
+.item-whoweare_body {
+  flex: 1 1 auto;
+}
+.item-whoweare__title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 150%;
+  letter-spacing: 0.1px;
+  color: #252b42;
+}
+.item-whoweare__title:not(:last-child) {
+  margin: 0 0 0.5rem 0;
+}
+.item-whoweare__text {
+  font-weight: 600;
+  line-height: 1.7;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 22.5rem;
+  overflow: hidden;
+}
+/* *нижняя часть - для скрытия длинного текста, при определенной ширине */
+
+@media (max-width: 1080px) {
+  .whoweare__content {
+    padding: 0 0 0 5rem;
+  }
+}
+
+@media (max-width: 950px) {
+  .whoweare {
+    padding: 5rem 0 5rem 0;
+  }
+  .whoweare__header {
+    margin: 0 0 3rem 0;
+  }
+  .whoweare__body {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  /* *align-items: stretch; нужен т.к картинка пропала из-за того, что ранее было задано align-items: flex-start;, а при адаптиве контент стал колонкой и прижал блок к левому краю, и картинка пропала. Так мы вернули 'резиновость' блоку с видео и его видно */
+  .whoweare__content {
+    padding: 0 0 0 0;
+  }
+  .whoweare__video {
+    padding: 0 0 56.25% 0;
+  }
+  /* *высота видео в ютубе 315px, а ширина 560px. Делим высоту на ширину и умножаем на 100% - получаем нижний паддинг для правильного отображения видео в блоке*/
+  .whoweare__video:not(:last-child) {
+    margin: 5rem 0 0 0;
+  }
+  .whoweare__title {
+    font-size: 2.4rem;
+  }
+}
+@media (max-width: 767px) {
+  .whoweare {
+    padding: 2rem 0 3rem 0;
+  }
+  .whoweare__video:not(:last-child) {
+    margin: 3rem 0 0 0;
+  }
+  .whoweare__top:not(:last-child) {
+    margin: 0 0 3rem 0;
+  }
+}
 /* FOOTER------------------------------------------------------------ */
 .footer {
 }
 
 /* *чтобы прибить футер к низу стр на враппер можно задать флекс, колумн, а на мэйн flex: 1 1 auto; - позволяя ему увеличиваться */
+
+/* 48^23 */
