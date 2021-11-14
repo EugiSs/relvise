@@ -2,7 +2,7 @@
 
 * {
   margin: 0;
-  bottom: 0;
+  padding: 0;
   box-sizing: border-box;
   border: none;
 }
@@ -38,6 +38,7 @@ li {
   flex-direction: column;
 }
 /* * overflow не на body т.к. иначе не будет скрола вовсе */
+/* *чтобы прибить футер к низу стр на враппер можно задать флекс, колумн, а на мэйн flex: 1 1 auto; - позволяя ему увеличиваться */
 ._container {
   max-width: 104.6rem;
   padding: 0 1.5rem;
@@ -68,6 +69,9 @@ li {
 .header-block__title:not(:last-child) {
   margin: 0 0 1rem 0;
 }
+/* * через not потому что саб тайтла может и не быть */
+.header-block__sub-title {
+}
 @media (max-width: 992px) {
   .header-block__title {
     font-size: 3.5rem;
@@ -77,9 +81,6 @@ li {
   .header-block__title {
     font-size: 3rem;
   }
-}
-/* * через not потому что саб тайтла может и не быть */
-.header-block__sub-title {
 }
 /* HEADER ------------------------------------------------------------ */
 .header {
@@ -142,6 +143,9 @@ li {
   line-height: calc(24 / 14 * 100%);
 }
 /* *line-height лучще в %, чтобы при изменении шрифта, он автоматически менялся */
+.menu__link:hover {
+  text-decoration: underline;
+}
 @media (max-width: 425px) {
   .menu__link {
     font-size: 1.8rem;
@@ -166,6 +170,10 @@ li {
   z-index: 2;
   max-width: 40rem;
 }
+/* *1) 184 тк 104 - высота шапки, 80 отступ от нее до верха блока (h1) 
+ * 191 тк отступ от низа блока main-block__body (кнопки) до общего блока (низа картинки)*/
+/* *2) relative и z-index нужны, чтобы картинка не закрывала текст в блоке*/
+/* *3) max-width сначала по макету сделали 509px, но текст переносиля позднее, чем надо, поэтому подогнали ширину по тексту и поменяли */
 @media (max-width: 992px) {
   .main-block__body {
     padding: 12rem 0 19.1rem 0;
@@ -176,10 +184,6 @@ li {
     padding: 10rem 0 16rem 0;
   }
 }
-/* *1) 184 тк 104 - высота шапки, 80 отступ от нее до верха блока (h1) 
- * 191 тк отступ от низа блока main-block__body (кнопки) до общего блока (низа картинки)*/
-/* *2) relative b z-index нужны, чтобы картинка не закрывала текст в блоке*/
-/* *3) max-width сначала по макету сделали 509px, но текст переносиля позднее, чем надо, поэтому подогнали ширину по тексту и поменяли */
 .main-block__body > *:not(:last-child) {
   margin: 0 0 3.5rem 0;
 }
@@ -221,6 +225,17 @@ li {
   background: transparent;
   border: 1px solid #0d5c63;
   color: #0d5c63;
+  transition: all 0.3s ease 0s;
+}
+.main-block__button_orange {
+  transition: all 0.3s ease 0s;
+}
+.main-block__button_orange:hover {
+  filter: brightness(80%);
+}
+.main-block__button_border:hover {
+  background-color: #0d5c63;
+  color: #fff;
 }
 .main-block__button:not(:last-child) {
   margin: 0 1rem 0 0;
@@ -623,10 +638,425 @@ li {
     margin: 0 0 3rem 0;
   }
 }
+
+/* page__clients ----------------------------------------------------- */
+.page__clients {
+  margin-bottom: 2rem;
+}
+.clients {
+  padding: 5rem 0;
+}
+/* *изначально был паддинг 5.6, но 0.6 убрали в паддинг на сами item - отступ безопасности */
+.clients__container {
+}
+.clients__items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+/* *justify-content: center - для центрования иконок при адаптиве, при переносе строки */
+.clients__item {
+  padding: 0.6rem 1.5rem;
+  flex: 0 1 16.6667%;
+  text-align: center;
+  min-width: 14rem;
+}
+.clients__item img {
+  max-width: 100%;
+}
+/* *чтобы если в лого будет большая картинка - она сжалась и поместилась в блок. а на сами дивы .clients__item - добавляем минимальную ширину, чтобы картинки не были очень маленькими на меньших расширениях*/
+
+/* page__subscribe ------------------------------------------------------------------------------- */
+.page__subscribe {
+}
+.subscribe {
+  position: relative;
+  padding-bottom: 2rem;
+}
+.subscribe::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #252b42;
+  width: 100%;
+  height: 7.7rem;
+}
+.subscribe__container {
+}
+.subscribe__body {
+  position: relative;
+  z-index: 2;
+  padding: 3.3rem 4.5rem;
+  border-radius: 2px;
+  background-color: #17213c;
+}
+.subscribe__title {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 133%;
+  letter-spacing: 0.1px;
+}
+.subscribe__form {
+  flex: 0 1 50%;
+  display: flex;
+  align-items: center;
+}
+.subscribe__input {
+  width: 100%;
+  background-color: #f9f9f9;
+  flex: 1 1 auto;
+  line-height: 200%;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px 0 0 5px;
+  padding: 1.5rem 2rem;
+}
+/* *1) flex: 1 1 auto, чтобы поле ввода растянулось по всей свободной ширине контейнера */
+/* *2) width: 100%, чтобы блок помещался при адаптиве и не растягивался шире, не выпадал (видно на 320px) */
+.subscribe__input:focus {
+  color: #000;
+}
+.subscribe__button {
+  line-height: 200%;
+  color: #ffffff;
+  background-color: #ff7b47;
+  border: 1px solid #e6e6e6;
+  border-radius: 0px 5px 5px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 2.2rem;
+}
+/* *центруем, чтобы текст всегда располагался по центру, сколько бы его не было в кнопке */
+.subscribe__button:hover {
+  filter: brightness(80%);
+}
+@media (min-width: 1070px) {
+  .subscribe__body {
+    margin: 0 3rem;
+  }
+}
+/* *здесь используем mobile-first чтобы лишний раз не писать отступ в одном месте и не обнулять в другом */
+@media (min-width: 800px) {
+  .subscribe__title {
+    max-width: 26.6rem;
+  }
+  .subscribe__body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+/* *на тайтл пишем mobile-first с максимальной шириной блока, чтобы на разрешении меньше 800 текст был в 1 строку , а не в 2 и высота блока на моб устройствах была меньше */
+@media (max-width: 800px) {
+  .subscribe__title {
+    margin-bottom: 2rem;
+  }
+  .subscribe__body {
+    padding: 2rem 2.5rem;
+    margin: 0 -1.5rem;
+  }
+  .subscribe__button {
+    padding: 1.5rem 1.5rem;
+  }
+}
+
+/* page__getintouch ---------------------------------------------------------- */
+.page__getintouch {
+}
+.getintouch {
+  padding: 8rem 0 14.8rem 0;
+}
+.getintouch__container {
+}
+.getintouch__header {
+  margin-bottom: 8rem;
+}
+.getintouch__body {
+}
+.getintouch__items {
+  margin: 0 -1.5rem;
+}
+.getintouch__item {
+}
+.item-getintouch {
+  padding: 5rem 4rem;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0 1 33.333%;
+}
+.item-getintouch > *:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+.item-getintouch_active {
+  background-color: #252b42;
+  padding: 8rem 4rem;
+}
+.item-getintouch_active .item-getintouch__email {
+  color: #fff;
+}
+.item-getintouch_active .item-getintouch__label {
+  color: #fff;
+}
+.item-getintouch_active .item-getintouch__button {
+  color: #fff;
+  border: 1px solid #fff;
+}
+.item-getintouch__icon {
+}
+.item-getintouch__emails {
+  text-align: center;
+}
+.item-getintouch__email {
+  color: #252b42;
+  font-weight: 600;
+  line-height: 171%;
+}
+.item-getintouch__email:hover {
+  text-decoration: underline;
+}
+.item-getintouch__label {
+  font-weight: 700;
+  color: #252b42;
+  font-size: 1.6rem;
+  letter-spacing: 0.1px;
+  line-height: 150%;
+}
+.item-getintouch__button {
+  min-height: 4.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ff7b47;
+  font-weight: 600;
+  line-height: 171%;
+  border: 1px solid #ff7b47;
+  border-radius: 5px;
+  padding: 0.5rem 2rem;
+  transition: all 0.3s ease 0s;
+}
+.item-getintouch__button:hover {
+  background-color: #ff7b47;
+  border: 1px solid #ff7b47;
+  color: #fff;
+}
+
+@media (min-width: 992px) {
+  .getintouch__items {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 3rem;
+  }
+}
+@media (max-width: 992px) {
+  .getintouch {
+    padding: 5rem 0 8rem 0;
+  }
+  .getintouch__header {
+    margin-bottom: 5rem;
+  }
+  .item-getintouch_active {
+    padding: 5rem 4rem;
+  }
+}
+@media (max-width: 767px) {
+  .getintouch {
+    padding: 4rem 0 4rem 0;
+  }
+  .getintouch__header {
+    margin-bottom: 3rem;
+  }
+}
+
+/* page__contactus ----------------------------------------------------------- */
+.page__contactus {
+}
+.contactus {
+  background-color: #fff;
+  padding: 4rem 0;
+}
+.contactus__container {
+}
+.contactus__body {
+}
+.contactus__content {
+  padding: 0 0 2rem 0;
+}
+/* *отступ снизу будет только на маленьких расширениях (до 767), а на больших отступ будет справа (тк внизу медиа с mobile-first */
+.contactus__title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 133%;
+  letter-spacing: 0.1px;
+  color: #252b42;
+}
+.contactus__title:not(:last-child) {
+  margin-bottom: 1rem;
+}
+.contactus__text {
+}
+.contactus__button {
+  min-height: 5.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #ff7b47;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem 4rem;
+  transition: all 0.3s ease 0s;
+}
+.contactus__button:hover {
+  filter: brightness(80%);
+}
+
+@media (min-width: 767px) {
+  .contactus__body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .contactus__content {
+    padding: 0 2rem 0 0;
+  }
+}
 /* FOOTER------------------------------------------------------------ */
 .footer {
 }
+.footer__top {
+  background: #17213c;
+  padding: 3rem 0;
+  color: #fff;
+}
+/* *изначально было padding: 5rem 0; но при адаптиве, при переносе блоков footer__column в стобец, между мини не было отступов. Поэтому здесь сделали паддинг 3rem, а оставшиеся 2 добавили для блоков: footer__column {padding: 0 1.5rem;} => {padding: 2rem 1.5rem;}. Это удобно, чтобы не прописывать доп оступы при адаптиве*/
+.footer__main {
+}
+.footer__body {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -1.5rem;
+}
+/* *flex-wrap: wrap для переноса строк при адаптиве на меньших разрешениях*/
+.footer__column {
+  flex: 0 1 16.6667%;
+  padding: 2rem 1.5rem;
+}
+/* *1)размер колонки 16, тк всего колонок 6, просто последняя на макете занимает место 2х колонок */
+/* *2)отступы безопасности между колонками. чтобы блок не сузился по бокам, на род блок body добавили отриц марджины, чтобы невелировать паддинги по краям */
 
-/* *чтобы прибить футер к низу стр на враппер можно задать флекс, колумн, а на мэйн flex: 1 1 auto; - позволяя ему увеличиваться */
+.footer__column:last-child {
+  flex: 0 1 33.334%;
+}
+/* * 16,6667 умножили на 2, чтобы колонка занимала 2 места */
+.footer__label {
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 150%;
+  letter-spacing: 0.1;
+  margin: 0 0 2rem 0;
+}
+.footer__menu {
+}
+.menu-footer {
+}
+.menu-footer__list {
+}
+.menu-footer__item {
+}
+.menu-footer__item:not(:last-child) {
+  margin-bottom: 1rem;
+}
+.menu-footer__link {
+  font-weight: 600;
+  line-height: 171%;
+}
+.menu-footer__link:hover {
+  text-decoration: underline;
+}
+.footer__contacts {
+}
+.contacts-footer {
+  display: flex;
+  flex-direction: column;
+}
+.contacts-footer__item {
+  padding: 0 0 0 3.4rem;
+  line-height: 171%;
+  font-weight: 600;
+}
+.contacts-footer__item:hover {
+  text-decoration: underline;
+}
+/* *так как нужен отступ от иконок. 10px между иконками и текстом и 24px ширина самих иконок */
+.contacts-footer__item:not(:last-child) {
+  margin-bottom: 1.2rem;
+}
+.contacts-footer__item_phone {
+  background: url(../img/footer/icons/1.svg) left no-repeat;
+}
+.contacts-footer__item_map {
+  background: url(../img/footer/icons/2.svg) left no-repeat;
+  overflow: hidden;
+  max-width: 19.5rem;
+  white-space: nowrap;
+}
+.contacts-footer__item_mail {
+  background: url(../img/footer/icons/3.svg) left no-repeat;
+}
+.footer__bottom {
+  padding: 2.5rem 0;
+}
+.footer__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer__copy {
+  font-weight: 600;
+  line-height: 171%;
+}
+.footer__social {
+}
+.social {
+  display: flex;
+  align-items: center;
+}
+.social__item {
+}
+.social__item:not(:last-child) {
+  margin: 0 2rem 0 0;
+}
 
-/* 48^23 */
+@media (max-width: 992px) {
+  .footer__column {
+    flex: 0 1 25%;
+  }
+  .footer__column:last-child {
+    flex: 1 1 100%;
+  }
+}
+@media (max-width: 700px) {
+  .footer__column {
+    flex: 0 1 50%;
+  }
+}
+@media (max-width: 620px) {
+  .footer__container {
+    flex-direction: column;
+  }
+  .footer__copy {
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+}
+
+/* чтобы в фигме сгруппировать векторы в 1 файл - выделить их и нажать Ctrl+G. Удобно, когда иначальная папка шире, чем надо */
